@@ -1,11 +1,7 @@
-local NPC_Entry = 200095
-
 local NpcExample = {}
 
-local UnitEntry = 200094; -- сам моб который начинает ивент
-local Helper_Unit_Entry = 200095; -- мобы которых призывает main unit
+local Helper_Unit_Entry = 100095; -- мобы которых призывает main unit
 local Target_for_beam = 21987; -- таргет для луча в портал
-local Boss_Entry = 17968; -- id самого босса
 
 -- ability
 local laser_beam_visual = 43591; -- каст луча в портал (визуалка)
@@ -41,8 +37,8 @@ local target = creature:GetNearestCreature(533, Target_for_beam, 0, 1);
 	
 end
 
-RegisterCreatureEvent(NPC_Entry, 1, NpcExample.OnEnterCombat)
-RegisterCreatureEvent(NPC_Entry, 2, NpcExample.OnLeaveCombat)
-RegisterCreatureEvent(NPC_Entry, 3, NpcExample.OnTargetDied)
-RegisterCreatureEvent(NPC_Entry, 4, NpcExample.OnDied)
-RegisterCreatureEvent(NPC_Entry, 22, NpcExample.ONSUMMONED) -- on spawn
+RegisterCreatureEvent(Helper_Unit_Entry, 1, NpcExample.OnEnterCombat)
+RegisterCreatureEvent(Helper_Unit_Entry, 2, NpcExample.OnLeaveCombat)
+RegisterCreatureEvent(Helper_Unit_Entry, 3, NpcExample.OnTargetDied)
+RegisterCreatureEvent(Helper_Unit_Entry, 4, NpcExample.OnDied)
+RegisterCreatureEvent(Helper_Unit_Entry, 22, NpcExample.ONSUMMONED) -- on spawn

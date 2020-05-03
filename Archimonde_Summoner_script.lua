@@ -1,7 +1,7 @@
-﻿local UnitEntry = 200094; -- сам моб который начинает ивент
-local Helper_Unit_Entry = 200095; -- мобы которых призывает main unit
+﻿local UnitEntry = 100094; -- сам моб который начинает ивент
+local Helper_Unit_Entry = 100095; -- мобы которых призывает main unit
 local Target_for_beam = 21987; -- таргет для луча в портал
-local Boss_Entry = 17968; -- id самого босса
+local Boss_Entry = 100096; -- id самого босса
 
 local emoteRU = {
 	[1] = "Я хочу убить Архимонда",
@@ -27,16 +27,7 @@ local emoteEN = {
 
 };
 
---[[local ability = {
-	[1] = 43591, -- каст луча в портал (визуалка)
-	[2] = ,
-	[3] = ,
-	[4] = ,
-	[5] = ,
-	[6] = ,
-	[7] =
-	[8] =	
-};]]
+
 
 -- ability
 local laser_beam_visual = 43591; -- каст луча в портал (визуалка)
@@ -53,18 +44,25 @@ local laser_beam_visual = 43591; -- каст луча в портал (визу�
 
 -- функция открытия диалога
 function OnGossipHello(event, player, unit)
+--[[totaltime = os.time()  -- нужно сделать кд на меню
+D = AuthDBQuery("SELECT MAX(starttime) FROM uptime");
+local uptime = D:GetUInt32(0)
+local c = (totaltime - uptime)
+local seconds = c]]
+
 accountId = player:GetAccountId()
 local Q = AuthDBQuery("SELECT locale FROM account where `id`='"..accountId.."'");
 local localization = Q:GetUInt32(0)
-	if (localization == 8) then 
-		player:GossipMenuAddItem(7, emoteRU[1] , 0, 1,nil, emoteRU[2])
-		player:GossipMenuAddItem(7, emoteRU[3], 0, 2)
-		player:GossipSendMenu(1, unit)
-	    else
-		player:GossipMenuAddItem(7, emoteEN[1] , 0, 1,nil, emoteEN[2])
-		player:GossipMenuAddItem(7, emoteEN[3], 0, 2)
-		player:GossipSendMenu(1, unit)
-	end
+  
+			if (localization == 8) then 
+				player:GossipMenuAddItem(7, emoteRU[1] , 0, 1,nil, emoteRU[2])
+				player:GossipMenuAddItem(7, emoteRU[3], 0, 2)
+				player:GossipSendMenu(1, unit)
+				else
+				player:GossipMenuAddItem(7, emoteEN[1] , 0, 1,nil, emoteEN[2])
+				player:GossipMenuAddItem(7, emoteEN[3], 0, 2)
+				player:GossipSendMenu(1, unit)
+			end	
 end
 
  -- функция при нажатии на пункты в диалоге
@@ -83,12 +81,12 @@ function Duthorian_Dialogue01(event, delay, pCall, unit)
 local Q = AuthDBQuery("SELECT locale FROM account where `id`='"..accountId.."'");
 local localization = Q:GetUInt32(0)
        if (localization == 8) then
-			unit:MoveTo(200000, 1697.72, -5807.2, 115.807)
+			unit:MoveTo(200000, -3384.038086, 1530.856079, 50.210461)
 			unit:SendUnitSay(emoteRU[4], 0)
 			
 			unit:RegisterEvent(Duthorian_Dialogue02, 5000, 1)
 	        else
-			unit:MoveTo(200000, 1697.72, -5807.2, 115.807)
+			unit:MoveTo(200000, -3363.798096, 1527.353149, 50.534603)
 			unit:SendUnitSay(emoteEN[4], 0)
 			unit:RegisterEvent(Duthorian_Dialogue02, 5000, 1)
 	   end
@@ -100,11 +98,11 @@ local Q = AuthDBQuery("SELECT locale FROM account where `id`='"..accountId.."'")
 local localization = Q:GetUInt32(0)
 		if (localization == 8) then
 			--creature:MoveTo(200000, 1687.99, -5823.16, 116.125)
-			creature:MoveJump( 1687.99, -5823.16, 116.125, 1000, 10 )
+			creature:MoveTo(200000, -3363.798096, 1527.353149, 50.534603)
 			creature:SendUnitSay(emoteRU[5], 0)
 			creature:RegisterEvent(Duthorian_Dialogue03, 5000, 1)
 		    else
-			creature:MoveTo(200000, 1687.99, -5823.16, 116.125)
+			creature:MoveTo(200000, -3363.798096, 1527.353149, 50.534603)
 			creature:SendUnitSay(emoteEN[5], 0)
 			creature:RegisterEvent(Duthorian_Dialogue03, 5000, 1)
 		end
@@ -139,7 +137,7 @@ end
 
 -- призыв портала
 function SummonGameObject(event, delay, pCall, creature, target)
-    creature:SummonGameObject(178484, 1679.799194, -5839.246582, 125.895958, 0.849212)
+    creature:SummonGameObject(178484, -3327.562744, 1522.266846, 68.679482, 3.061593)
 	 
 end
 
@@ -180,16 +178,16 @@ end
 
 -- возврат на свое место NPC
 function ReturnToSpawnPoint(event, delay, pCall, creature)
-   creature:MoveTo(216992, 1674.89, -5784, 115.905)
+   creature:MoveTo(200000, -3377.647461, 1565.167969, 49.701183)
 end
 
 -- функция позиции босса
 function SummonHounds(creature, target)
     local x, y, z = creature:GetRelativePoint(math.random()*9, math.random()*math.pi*2)
-    local hound = creature:SpawnCreature(Boss_Entry, 1682.330811, -5838.205566, 116.149094, 1.064230, 2, 10000) -- количество секунд через сколько пропадет босс после выхода из комбата
+    local hound = creature:SpawnCreature(Boss_Entry, -3332.907471, 1522.713501, 54.666561, 3.034100, 2, 10000) -- количество секунд через сколько пропадет босс после выхода из комбата
 	
     if (hound) then
-		hound:MoveTo(200000, 1686.99, -5831.16, 116.125)
+		hound:MoveTo(200000, -3345.038818, 1524.312622, 52.958382)
         hound:AttackStart(player:IsRange())
     end
 end
@@ -203,7 +201,7 @@ end
 
 -- появление моба
 function Boss_Spawn(creature, event)
-    creature:SendUnitSay("Hi", 0)
+
 end
  
 -- комбат 
@@ -224,45 +222,43 @@ function OnLeaveCombat(event, creature)
 end
 
 
--- TEST
+-- helper summ 1
 function summ_1(creature, target)
     local x, y, z = creature:GetRelativePoint(math.random()*9, math.random()*math.pi*2)
-    local hound = creature:SpawnCreature(200095, 1699.9985596, -5835.481445, 116.129829, 3.137827, 2, 15500) -- количество секунд через сколько пропадет босс после выхода из комбата
+    local hound = creature:SpawnCreature(100095, -3382.687012, 1522.269165, 52.202652, 6.196133, 2, 15500) -- количество секунд через сколько пропадет босс после выхода из комбата
 	
     if (hound) then
-		hound:MoveTo(200000, 1691.969482, -5823,003418, 116.126167)
+		hound:MoveTo(200000, -3370.8884228, 1521.412598, 51.465778)
 		hound:SendUnitSay("Я помогу", 0) 
-		hound:RegisterEvent(beam_summoner_wait, 3000, 1)
+		hound:RegisterEvent(beam_summoner_wait, 2000, 1)
     end
 end
 
--- TEST
+-- helper spawn 1
 function spawn_1(event, delay, pCall, creature)
     summ_1(creature, creature:GetVictim())
     
 end
 
--- TEST
+-- helper summ 2
 function summ_2(creature, target)
     local x, y, z = creature:GetRelativePoint(math.random()*9, math.random()*math.pi*2)
-    local hound = creature:SpawnCreature(200095, 1699.677856, -5829.919922, 116.127899, 3.161389, 2, 15500) -- количество секунд через сколько пропадет босс после выхода из комбата
+    local hound = creature:SpawnCreature(100095, -3379.526855, 1537.938232, 48.790123, 6.156855, 2, 15500) -- количество секунд через сколько пропадет босс после выхода из комбата
 	
     if (hound) then
-		hound:MoveTo(200000, 1686.907959, -5819.095215, 116.124664)
+		hound:MoveTo(200000, -3368.538330, 1536.892944, 48.871216)
 		hound:SendUnitSay("Я помогу", 0)
-		hound:RegisterEvent(beam_summoner_wait, 3000, 1)
+		hound:RegisterEvent(beam_summoner_wait, 2000, 1)
     end
 end
 
--- TEST
+-- helper spawn 2
 function spawn_2(event, delay, pCall, creature)
     summ_2(creature, creature:GetVictim())
-    
 end
 
 function beam_summoner_wait(event, delay, pCall, creature)
-    creature:RegisterEvent(beam_summoner, 1, 110)
-    
+    creature:RegisterEvent(beam_summoner, 1, 120)
 end
 
 function beam_summoner(event, delay, pCall, creature, target)
