@@ -1,4 +1,9 @@
+
 function OnLogin(event, player)
+accountId = player:GetAccountId()
+local Q = AuthDBQuery("SELECT locale FROM account where `id`='"..accountId.."'");
+local localization = Q:GetUInt32(0)
+
     player:LearnSpell(71571) -- Heal
 	  -- Warrior
 	if (player:GetClass() == 1) then
@@ -1330,7 +1335,7 @@ function OnLogin(event, player)
 			player:LearnSpell(32266) -- Portal: Exodar
 			player:LearnSpell(11416) -- Portal: Ironforge
 			player:LearnSpell(33691) -- Portal: Shattrath
-			player:LearnSpell(11059) -- Portal: Stormwind
+			player:LearnSpell(10059) -- Portal: Stormwind
 			player:LearnSpell(49360) -- Portal: Theramore
 		elseif race == 2 or race == 5 or race == 6 or race == 8 or race == 10 then
 			player:LearnSpell(11417) -- Portal: Orgrimmar
@@ -1889,30 +1894,30 @@ function OnLogin(event, player)
    
 
 
-
-
-   player:RegisterEvent(description, 10000, 1)
+	if (localization == 8) then
+	   player:RegisterEvent(description_ruRU, 5000, 1)
+	   else
+	   player:RegisterEvent(description_enGB, 5000, 1)
+	end   
 end
 
-function description(event, delay, pCall, player, target)
-accountId = player:GetAccountId()
-local Q = AuthDBQuery("SELECT locale FROM account where `id`='"..accountId.."'");
-local localization = Q:GetUInt32(0)
-	if (localization == 8) then
-		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Ïðèâåò, ñïàñèáî, ÷òî ïðèñîåäèíèëèñü ê íàøåìó ñåðâåðó! Âû ìîæåòå èñïîëüçîâàòü êîìàíäó (#w your_text) äëÿ îôèöåðñêîãî ÷àòà.")
-		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Âû ìîæåòå èñïîëüçîâàòü [Teleporter Stone] (â âàøåé ñóìêå) äëÿ òåëåïîðòàöèè â ïîäçåìåëüå èëè â äðóãîå ìåñòî.")
-		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Ïîêóïàéòå ïðåäìåòû ó ïðîäàâöà [Weapon / Armor], à òàêæå íàõîäèòå ñâîå îðóæèå è êâåñòû äëÿ óëó÷øåíèÿ.")
-		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Îòêðîéòå [Teleporter Stone] -> [Gifts - Rewards (Daily)] -> [Daily Gift] è îòêðîéòå êîðîáêó â ñâîåé ñóìêå. Çàòåì ïåðåéäèòå â [Level Up Zone].")
-		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Íå çàáóäüòå ïðîãîëîñîâàòü çà íàñ è ïîëó÷èòü íàãðàäó ñ ïîìîùüþ [Teleporter Stone].")
-		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Óäà÷íîé èãðû ;)")	
-		else
+
+function description_ruRU(event, delay, pCall, player, target)
+		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: ÐŸÑ€Ð¸Ð²ÐµÑ‚, ÑÐ¿Ð°ÑÐ¸Ð±Ð¾, Ñ‡Ñ‚Ð¾ Ð¿Ñ€Ð¸ÑÐ¾ÐµÐ´Ð¸Ð½Ð¸Ð»Ð¸ÑÑŒ Ðº Ð½Ð°ÑˆÐµÐ¼Ñƒ ÑÐµÑ€Ð²ÐµÑ€Ñƒ! Ð’Ñ‹ Ð¼Ð¾Ð¶ÐµÑ‚Ðµ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÑŒ ÐºÐ¾Ð¼Ð°Ð½Ð´Ñƒ (#w your_text) Ð´Ð»Ñ Ð¾Ñ„Ð¸Ñ†ÐµÑ€ÑÐºÐ¾Ð³Ð¾ Ñ‡Ð°Ñ‚Ð°.")
+		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Ð’Ñ‹ Ð¼Ð¾Ð¶ÐµÑ‚Ðµ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÑŒ [Teleporter Stone] (Ð² Ð²Ð°ÑˆÐµÐ¹ ÑÑƒÐ¼ÐºÐµ) Ð´Ð»Ñ Ñ‚ÐµÐ»ÐµÐ¿Ð¾Ñ€Ñ‚Ð°Ñ†Ð¸Ð¸ Ð² Ð¿Ð¾Ð´Ð·ÐµÐ¼ÐµÐ»ÑŒÐµ Ð¸Ð»Ð¸ Ð² Ð´Ñ€ÑƒÐ³Ð¾Ðµ Ð¼ÐµÑÑ‚Ð¾.")
+		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: ÐŸÐ¾ÐºÑƒÐ¿Ð°Ð¹Ñ‚Ðµ Ð¿Ñ€ÐµÐ´Ð¼ÐµÑ‚Ñ‹ Ñƒ Ð¿Ñ€Ð¾Ð´Ð°Ð²Ñ†Ð° [Weapon / Armor], Ð° Ñ‚Ð°ÐºÐ¶Ðµ Ð½Ð°Ñ…Ð¾Ð´Ð¸Ñ‚Ðµ ÑÐ²Ð¾Ðµ Ð¾Ñ€ÑƒÐ¶Ð¸Ðµ Ð¸ ÐºÐ²ÐµÑÑ‚Ñ‹ Ð´Ð»Ñ ÑƒÐ»ÑƒÑ‡ÑˆÐµÐ½Ð¸Ñ.")
+		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: ÐžÑ‚ÐºÑ€Ð¾Ð¹Ñ‚Ðµ [Teleporter Stone] -> [Gifts - Rewards (Daily)] -> [Daily Gift] Ð¸ Ð¾Ñ‚ÐºÑ€Ð¾Ð¹Ñ‚Ðµ ÐºÐ¾Ñ€Ð¾Ð±ÐºÑƒ Ð² ÑÐ²Ð¾ÐµÐ¹ ÑÑƒÐ¼ÐºÐµ. Ð—Ð°Ñ‚ÐµÐ¼ Ð¿ÐµÑ€ÐµÐ¹Ð´Ð¸Ñ‚Ðµ Ð² [Level Up Zone].")
+		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: ÐÐµ Ð·Ð°Ð±ÑƒÐ´ÑŒÑ‚Ðµ Ð¿Ñ€Ð¾Ð³Ð¾Ð»Ð¾ÑÐ¾Ð²Ð°Ñ‚ÑŒ Ð·Ð° Ð½Ð°Ñ Ð¸ Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ Ð½Ð°Ð³Ñ€Ð°Ð´Ñƒ Ñ Ð¿Ð¾Ð¼Ð¾Ñ‰ÑŒÑŽ [Teleporter Stone].")
+		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Ð£Ð´Ð°Ñ‡Ð½Ð¾Ð¹ Ð¸Ð³Ñ€Ñ‹ ;)")	
+end
+
+function description_enGB(event, delay, pCall, player, target)
 		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Hi, Thank you for join our server! You can use command (#w your_text) for officer chat.")
 		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: You can use [Teleporter Stone] (in your bag) for teleport to instance or other locations.")
 		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Buy items from [Weapon/Armor] vendor, also find your weapon & gear quest's for upgrade.")
 		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Open [Teleporter Stone]->[Gifts - Rewards (Daily)]->[Daily Gift] & open box in your bag. Then go to [Level up Zone].")
 		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Don't forget vote for us & get your reward with [Teleporter Stone].")
 		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Have fun ;)")	
-	end
 end
 
 
