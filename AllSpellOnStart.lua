@@ -1899,19 +1899,19 @@ accountId = player:GetAccountId()
 local Q = AuthDBQuery("SELECT locale FROM account where `id`='"..accountId.."'");
 local localization = Q:GetUInt32(0)
 	if (localization == 8) then
-		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Hi, Thank you for join our server! You can use command (#w your_text) for officer chat.")
-		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: You can use [Teleporter Stone] (in your bag) for teleport to instance or other locations.")
-		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Buy items from [Weapon/Armor] vendor, also find your weapon & gear quest's for upgrade.")
-		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Open [Teleporter Stone]->[Gifts - Rewards (Daily)]->[Daily Gift] & open box in your bag. Then go to [Level up Zone].")
-		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Don't forget vote for us & get your reward with [Teleporter Stone].")
-		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Have fun ;)")	
-		else
 		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Привет, спасибо, что присоединились к нашему серверу! Вы можете использовать команду (#w your_text) для офицерского чата.")
 		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Вы можете использовать [Teleporter Stone] (в вашей сумке) для телепортации в подземелье или в другое место.")
 		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Покупайте предметы у продавца [Weapon / Armor], а также находите свое оружие и квесты для улучшения.")
 		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Откройте [Teleporter Stone] -> [Gifts - Rewards (Daily)] -> [Daily Gift] и откройте коробку в своей сумке. Затем перейдите в [Level Up Zone].")
 		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Не забудьте проголосовать за нас и получить награду с помощью [Teleporter Stone].")
 		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Удачной игры ;)")	
+		else
+		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Hi, Thank you for join our server! You can use command (#w your_text) for officer chat.")
+		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: You can use [Teleporter Stone] (in your bag) for teleport to instance or other locations.")
+		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Buy items from [Weapon/Armor] vendor, also find your weapon & gear quest's for upgrade.")
+		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Open [Teleporter Stone]->[Gifts - Rewards (Daily)]->[Daily Gift] & open box in your bag. Then go to [Level up Zone].")
+		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Don't forget vote for us & get your reward with [Teleporter Stone].")
+		player:SendBroadcastMessage("|ccc33FFFF[New Player Guide]|ccc33FF33: Have fun ;)")	
 	end
 end
 

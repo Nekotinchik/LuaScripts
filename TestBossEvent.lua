@@ -53,8 +53,7 @@ local laser_beam_visual = 43591; -- каст луча в портал (визу�
 
 -- функция открытия диалога
 function OnGossipHello(event, player, unit)
-
-
+accountId = player:GetAccountId()
 local Q = AuthDBQuery("SELECT locale FROM account where `id`='"..accountId.."'");
 local localization = Q:GetUInt32(0)
 	if (localization == 8) then 
