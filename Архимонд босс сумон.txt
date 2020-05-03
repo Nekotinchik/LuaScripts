@@ -1,0 +1,243 @@
+local UnitEntry = 200094
+
+-- 41232 - телепортация
+-- 38007 - розовый луч
+-- 35766 - суммон
+
+local t = {
+
+    [1]   = 216987, 1695.26, -5809.75, 115.948,
+    [2]   = 216987, 1687.99, -5824.36, 116.127,
+    [3]   = 216987, 1697.88, -5833.17, 116.13,
+    [4]   = 216987, 1709.3, -5822.58, 116.123,
+    [5]   = 216987, 1701.93, -5809.62, 115.93
+}
+
+
+
+local f = {
+	[133] = 10000 
+}
+
+
+
+
+function OnGossipHello(event, player, unit)
+accountId = player:GetAccountId()
+local Q = AuthDBQuery("SELECT locale FROM account where `id`='"..accountId.."'");
+local localization = Q:GetUInt32(0)
+
+    player:GossipMenuAddItem(7, "Я хочу убить Архимонда ".."["..localization.."]".."" , 0, 1,nil, "Начать бой ?")
+    player:GossipMenuAddItem(7, "Не сейчас", 0, 2)
+    player:GossipSendMenu(1, unit)
+end
+ 
+function OnGossipSelect(event, player, unit, sender, intid, code)
+
+     if (intid == 1)then
+	    --player:SendBroadcastMessage("|ccc33FFFF[Teleporter Stone]: You are in combat!") 
+		--unit:SetFaction(1813)
+		--unit:SendUnitYell("test2", 0)
+		--unit:AttackStart(player)
+        unit:RegisterEvent(Duthorian_Dialogue01, 1000, 1)
+		player:GossipComplete()
+	 end
+	 if (intid == 2)then
+	    player:GossipComplete()
+	 end
+end
+
+
+function Duthorian_Dialogue01(event, delay, pCall, unit)
+local Q = AuthDBQuery("SELECT locale FROM account where `id`='"..accountId.."'");
+local localization = Q:GetUInt32(0)
+       if (localization == 8) then
+        unit:MoveTo(200000, 1697.72, -5807.2, 115.807)
+        unit:SendUnitSay("Глупец! Ты действительно думаешь что ты сможешь победить самого Архимонда?", 0)
+        unit:RegisterEvent(Duthorian_Dialogue02, 5000, 1)
+		else
+		unit:MoveTo(200000, 1697.72, -5807.2, 115.807)
+        unit:SendUnitSay("Fool! Do you really think that you can defeat Archimonde himself?", 0)
+        unit:RegisterEvent(Duthorian_Dialogue02, 5000, 1)
+		end
+end
+ 
+function Duthorian_Dialogue02(event, delay, pCall, creature)
+local Q = AuthDBQuery("SELECT locale FROM account where `id`='"..accountId.."'");
+local localization = Q:GetUInt32(0)
+		if (localization == 8) then
+        creature:MoveTo(200000, 1687.99, -5823.16, 116.125)
+        creature:SendUnitSay("Архимонд разрушит ваш жалкий мир!", 0)
+        creature:RegisterEvent(Duthorian_Dialogue03, 5000, 1)
+		else
+		creature:MoveTo(200000, 1687.99, -5823.16, 116.125)
+        creature:SendUnitSay("Archimonde will destroy your miserable world!", 0)
+        creature:RegisterEvent(Duthorian_Dialogue03, 5000, 1)
+		end
+end
+
+function Duthorian_Dialogue03(event, delay, pCall, creature, target)
+local Q = AuthDBQuery("SELECT locale FROM account where `id`='"..accountId.."'");
+local localization = Q:GetUInt32(0)
+		if (localization == 8) then
+		 creature:SendUnitSay("Мой повелитель я призываю вас из бездны! Архимонд, прийди и уничтож все живое.", 0)
+		 creature:RegisterEvent(SpawnHounds, 15000, 1) -- 1 количество раз вызывания функции --5000 через сколько сек появится босс
+        -- creature:SetFaction(1813)
+		 --creature:RegisterEvent(AddAuraSummon, 1000, 1)
+		 creature:RegisterEvent(laser, 1, 140)
+		 creature:RegisterEvent(SummonGameObject, 2000, 1)
+		 creature:RegisterEvent(talk, 10000, 1)
+		 creature:RegisterEvent(talk2, 16000, 1)
+		 creature:RegisterEvent(RemoveAuraSummon, 13000, 1)
+		 creature:RegisterEvent(ReturnToSpawnPoint, 18000, 1)
+		 else
+		 creature:SendUnitSay("My lord, I challenge you from the abyss! Archimonde, come and destroy all life.", 0)
+		 creature:RegisterEvent(SpawnHounds, 15000, 1) -- 1 количество раз вызывания функции --5000 через сколько сек появится босс
+		 creature:RegisterEvent(laser, 1, 140)
+		 creature:RegisterEvent(SummonGameObject, 2000, 1)
+		 creature:RegisterEvent(talk, 10000, 1)
+		 creature:RegisterEvent(talk2, 16000, 1)
+		 creature:RegisterEvent(RemoveAuraSummon, 13000, 1)
+		 creature:RegisterEvent(ReturnToSpawnPoint, 18000, 1)
+		 end
+		 
+end
+
+function SummonGameObject(event, delay, pCall, creature, target)
+    creature:SummonGameObject(178484, 1679.799194, -5839.246582, 125.895958, 0.849212)
+	 
+end
+
+
+function laser(event, delay, pCall, creature, target)
+    local crystal = creature:GetNearestCreature(533, 21987, 0, 1);
+    if crystal  then
+     
+     -- creature:SendUnitSay("скрипт работает", 0)
+      creature:CastSpell(crystal, 43591);
+    end 
+
+ 
+       --local target = creature:GetNearestCreature(533, 100093, 0, 0);
+    
+     -- creature:SendUnitSay("Stupid %s, you think you can stop the master?", 0);
+      --creature:CastSpell(target, 38007)
+	 
+end
+
+
+
+
+function talk2(event, delay, pCall, creature)
+local Q = AuthDBQuery("SELECT locale FROM account where `id`='"..accountId.."'");
+local localization = Q:GetUInt32(0)
+	if (localization == 8) then
+	creature:SendUnitSay("Эти чужаки осмелелись убить вас.", 0)
+	else
+	creature:SendUnitSay("These strangers dare to kill you.", 0)
+	end
+end
+
+function talk(event, delay, pCall, creature)
+local Q = AuthDBQuery("SELECT locale FROM account where `id`='"..accountId.."'");
+local localization = Q:GetUInt32(0)
+	if (localization == 8) then
+	creature:SendUnitSay("Ритуал почти завершен.", 0)
+	else
+	creature:SendUnitSay("The ritual is almost complete.", 0)
+	end
+end
+
+function RemoveAuraSummon(event, delay, pCall, creature)
+   creature:RemoveAura(36393)
+end
+
+function AddAuraSummon(event, delay, pCall, creature)
+   creature:CastSpell(creature:GetVictim(), 36393)
+end
+
+function ReturnToSpawnPoint(event, delay, pCall, creature)
+   creature:MoveTo(216992, 1674.89, -5784, 115.905)
+    
+end
+
+function SummonHounds(creature, target)
+    local x, y, z = creature:GetRelativePoint(math.random()*9, math.random()*math.pi*2)
+    local hound = creature:SpawnCreature(17968, 1682.330811, -5838.205566, 116.149094, 1.064230, 2, 10000) -- количество секунд через сколько пропадет босс после выхода из комбата
+	
+    if (hound) then
+		hound:MoveTo(200000, 1686.99, -5831.16, 116.125)
+        hound:AttackStart(player:IsRange())
+    end
+end
+
+function SpawnHounds(event, delay, pCall, creature)
+   SummonHounds(creature, creature:GetVictim())
+    SummonHounds(creature, creature:GetVictim())
+    creature:RegisterEvent(SpawnHounds, 45000, 1)
+end
+
+function Boss_Spawn(creature, event)
+       creature:SetFaction(35) -- Wanted this on spawn?
+end
+ 
+function Boss_BeginCombat(event, creature, target)
+        creature:SendUnitSay("Combat", 0)
+		--creature:RegisterEvent(spell_1, 3000, 2000)
+		creature:RegisterEvent(blizzard2, 4000, 2000)
+end
+function spell_1(event, delay, pCall, creature)
+--creature:CastSpell(creature:GetVictim(), 133, 3000, 2000)
+local plr = creature:GetRandomPlayer(0)
+if (plr ~= nil) and (plr:IsAlive() == true) then
+creature:FullCastSpellOnTarget(21077, plr)
+end
+end
+--[[
+function blizzard(event, creature, target)
+	local plr = creature:GetRandomPlayer()
+	   local x = plr:GetX()
+	   local y = plr:GetY()
+	   local z = plr:GetZ()
+	   creature:CastSpellAoF(x, y, z, 42940)
+end
+ 
+ function blizzard2(event, delay, repeats, creature)
+  local Target = creature:GetAITarget(0, true, 0, 30);
+  local Tx, Ty, Tz = Target:GetLocation();
+  creature:CastSpellAoF(Tx, Ty, Tz, 42940, true);
+end
+--]] --не работает
+
+
+
+
+
+
+
+
+
+
+function Boss_Death(creature, event, player)
+        creature:RemoveEvents()
+        
+        
+		
+end
+
+
+function OnLeaveCombat(event, creature)
+	
+    creature:RemoveEvents()
+	creature:SetFaction(35)
+	--creature:DespawnOrUnsummon(3000) -- Деспавн моб пропадает через 3 сек
+	--creature:MoveTo(216992, 1674,89, -5784, 115,905)
+	
+end
+
+RegisterCreatureGossipEvent(UnitEntry, 1, OnGossipHello)
+RegisterCreatureGossipEvent(UnitEntry, 2, OnGossipSelect)
+RegisterCreatureEvent(UnitEntry, 1, Boss_BeginCombat) -- on combat
+RegisterCreatureEvent(UnitEntry, 2, OnLeaveCombat) -- on leave combat
+RegisterCreatureEvent(UnitEntry, 4, Boss_Death) -- on death
+RegisterCreatureEvent(UnitEntry, 18, Boss_Spawn) -- on spawn
