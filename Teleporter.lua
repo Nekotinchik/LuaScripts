@@ -16,7 +16,7 @@ player:SendBroadcastMessage("|ccc33FFFF[Teleporter Stone]: You are in combat!")
 player:GossipComplete()
 else 
 player:GossipMenuAddItem(7, "|ccc993366[ Server News ]", 0, 1)
-player:GossipMenuAddItem(7, "|ccc993366[ Test ]", 0, 1000)
+--player:GossipMenuAddItem(7, "|ccc993366[ Test ]", 0, 1000)
 player:GossipMenuAddItem(6, "|ccc0000FF[ Main Cities ]", 0, 2)
 player:GossipMenuAddItem(9, "|cccFF0000[ Task Area ]", 0, 3)
 player:GossipMenuAddItem(2, "|ccc009933[ Instance - Bosses ]", 0, 4)
@@ -29,7 +29,6 @@ player:GossipMenuAddItem(3, "|ccc000099[ Player Tools ]", 0, 10)
 player:GossipMenuAddItem(8, "|cccC71585[ VIP - VotePoint Panel ]", 0, 223)
 player:GossipMenuAddItem(6, "[ Gifts - Rewards (Daily) ]", 0, 281)
 player:GossipMenuAddItem(4, "|ccc00746F[ Reset Instance ]", 0, 11)
-player:GossipMenuAddItem(4, "|ccc00746F[ Hunter pet level ]", 0, 1000)
 player:GossipSendMenu(1, item)
 end
 end
@@ -41,7 +40,7 @@ player:SendBroadcastMessage("|ccc33FFFF[Teleporter Stone]: You are in combat!")
 player:GossipComplete()
 else 
 player:GossipMenuAddItem(7, "|ccc993366[ Server News]", 0, 1)
-player:GossipMenuAddItem(7, "|ccc993366[ Test ]", 0, 1000)
+--player:GossipMenuAddItem(7, "|ccc993366[ Test ]", 0, 1000)
 player:GossipMenuAddItem(6, "|ccc0000FF[ Main Cities ]", 0, 2)
 player:GossipMenuAddItem(9, "|cccFF0000[ Task Area ]", 0, 3)
 player:GossipMenuAddItem(2, "|ccc009933[ Instance - Bosses ]", 0, 4)
@@ -54,7 +53,6 @@ player:GossipMenuAddItem(3, "|ccc000099[ Player Tools ]", 0, 10)
 player:GossipMenuAddItem(8, "|cccC71585[ VIP - VotePoint Panel ]", 0, 223)
 player:GossipMenuAddItem(6, "[ Gifts - Rewards (Daily) ]", 0, 281)
 player:GossipMenuAddItem(4, "|ccc00746F[ Reset Instance ]", 0, 11)
-player:GossipMenuAddItem(4, "|ccc00746F[ Hunter pet level ]", 0, 1000)
 player:GossipSendMenu(1, item, 1)
 end
 end
@@ -70,11 +68,6 @@ local DP = T:GetUInt32(0)
 local DG = 100020
 
 
---hunter pet test
-if(intid == 1000) then
-
-unit:SetLevel(100)
-end
 
 --Server News
 if(intid == 1) then

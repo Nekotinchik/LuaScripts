@@ -1,7 +1,22 @@
 ﻿local UnitEntry = 100094; -- сам моб который начинает ивент
 local Helper_Unit_Entry = 100095; -- мобы которых призывает main unit
-local Target_for_beam = 21987; -- таргет для луча в портал
 local Boss_Entry = 100096; -- id самого босса
+
+-- ability
+local Target_for_beam = 21987; -- таргет для луча в портал
+local fear = 31970; -- страх 
+local Grip_of_the_Legion = 31972; -- хватка легиона	
+local Air_Burst = 32014; -- подкидывает в воздух
+local Finger_of_Death = 31984; -- наносит 20к урона
+local arcane_ress = 34331; -- аркан резист
+local fire_ress = 34333; -- фаер резист
+local frost_ress = 34334; -- фрост резист
+local holy_ress = 34336; -- холи резист
+local shadow_ress = 34338; -- шадоу резист
+local physical_ress = 34337; -- физ резист
+local nature_ress = 34335; -- натур резист
+local ahune_ress = 45954; -- аура Ахуна
+
 
 local emoteRU = {
 	[1] = "Я хочу убить Архимонда",
@@ -122,6 +137,7 @@ local localization = Q:GetUInt32(0)
 			 creature:RegisterEvent(SummonGameObject, 2000, 1)
 			 creature:RegisterEvent(talk, 10000, 1)
 			 creature:RegisterEvent(talk2, 16000, 1)
+			 creature:RegisterEvent(Boss_Auras, 15000, 1)
 			 creature:RegisterEvent(ReturnToSpawnPoint, 18000, 1)
 		     else
 			 creature:SendUnitSay(emoteEN[6], 0)
@@ -130,11 +146,27 @@ local localization = Q:GetUInt32(0)
 			 creature:RegisterEvent(SummonGameObject, 2000, 1)
 			 creature:RegisterEvent(talk, 10000, 1)
 			 creature:RegisterEvent(talk2, 16000, 1)
+			 creature:RegisterEvent(Boss_Auras, 15000, 1)
 			 creature:RegisterEvent(ReturnToSpawnPoint, 18000, 1)
 		 end
 		 
 end
 
+
+-- вешает ауры на босса
+function Boss_Auras(event, delay, pCall, creature, target)
+local target = creature:GetNearestCreature(533, Boss_Entry, 0, 1);
+    if target  then
+			creature:AddAura(arcane_ress, target)
+			creature:AddAura(fire_ress, target)
+			creature:AddAura(frost_ress, target)
+			creature:AddAura(holy_ress, target)
+			creature:AddAura(shadow_ress, target)
+			creature:AddAura(physical_ress, target)
+			creature:AddAura(nature_ress, target)
+			creature:AddAura(ahune_ress, target)
+    end 
+end
 -- призыв портала
 function SummonGameObject(event, delay, pCall, creature, target)
     creature:SummonGameObject(178484, -3327.562744, 1522.266846, 68.679482, 3.061593)
@@ -178,13 +210,15 @@ end
 
 -- возврат на свое место NPC
 function ReturnToSpawnPoint(event, delay, pCall, creature)
-   creature:MoveTo(200000, -3377.647461, 1565.167969, 49.701183)
+   --creature:MoveTo(200000, -3377.647461, 1565.167969, 49.701183)
+   creature:CastSpell(nil, 41232, true)
+   creature:DespawnOrUnsummon(1000)
 end
 
 -- функция позиции босса
 function SummonHounds(creature, target)
     local x, y, z = creature:GetRelativePoint(math.random()*9, math.random()*math.pi*2)
-    local hound = creature:SpawnCreature(Boss_Entry, -3332.907471, 1522.713501, 54.666561, 3.034100, 2, 10000) -- количество секунд через сколько пропадет босс после выхода из комбата
+    local hound = creature:SpawnCreature(Boss_Entry, -3332.907471, 1522.713501, 54.666561, 3.034100, 3, 7200000) -- количество секунд через сколько пропадет босс после выхода из комбата
 	
     if (hound) then
 		hound:MoveTo(200000, -3345.038818, 1524.312622, 52.958382)
