@@ -2,20 +2,6 @@ local NPC_EXAMPLE = 100094
 
 local NpcExample = {}
 
-local NpcExampleSay= {
-    [1] = "Mortals ... is ... Here ...",
-    [2] = "Phase 1 runs",
-    [3] = "Flames of Azzinoth ",
-    [4] = "Phase 2 runs",
-    [5] = "The Demon Within",
-    [6] = "Phase 3 runs",
-    [7] = "Start Phase 4",
-    [8] = "Phase 4 runs",
-    [9] = "Ha-ha-ha and you thought to win me?",
-    [10] = "Die mortals...",
-    [11] = "Nooooo ... It is not possible.";
-};
-
 local NpcExampleSpells= {
     [1] = 57459; -- stun
 	[2] = 43612 --arcane_storm
@@ -39,8 +25,6 @@ end
 
 
 function NpcExample.OnLeaveCombat(event, creature)
-      
-
     creature:RemoveEvents()
 end
 
