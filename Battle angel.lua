@@ -1,26 +1,24 @@
-local NPC_EXAMPLE = 100094
+local BossEntry = 100097
 
-local NpcExample = {}
+-- ability
+local         stun = 57459; -- stun
+local arcane_storm = 43612; --arcane_storm
 
-local NpcExampleSpells= {
-    [1] = 57459; -- stun
-	[2] = 43612 --arcane_storm
 
-};
 
-function NpcExample.OnEnterCombat(event, creature, target)        -- Start Phase 1 at 100% Health
-    creature:RegisterEvent(NpcExample.OnPhase_1_arcane_storm_Say, 1000, 1)
-	creature:RegisterEvent(NpcExample.OnPhase_1_stun_Say, 1000, 1)
+function OnEnterCombat(event, creature, target) 
+    creature:RegisterEvent(arcane_storm, 1000, 1)
+	creature:RegisterEvent(stun, 1000, 1)
 end
 
-function NpcExample.OnPhase_1_arcane_storm_Say(event, delay, pCall, creature)
-	creature:CastSpell(creature:GetVictim(), NpcExampleSpells[1]) 
-	creature:RegisterEvent(NpcExample.OnPhase_1_arcane_storm_Say, 3000, 1)-- Npc Cast Spell
+function arcane_storm(event, delay, pCall, creature)
+	creature:CastSpell(creature:GetVictim(), arcane_storm) 
+	creature:RegisterEvent(arcane_storm, 3000, 1)
 end
 
-function NpcExample.OnPhase_1_stun_Say(event, delay, pCall, creature)
-	creature:CastSpell(creature:GetVictim(), NpcExampleSpells[2]) 
-	creature:RegisterEvent(NpcExample.OnPhase_1_stun_Say, 15000, 1)-- Npc Cast Spell
+function stun(event, delay, pCall, creature)
+	creature:CastSpell(creature:GetVictim(), stun) 
+	creature:RegisterEvent(stun, 15000, 1)
 end
 
 
@@ -36,7 +34,7 @@ function NpcExample.OnDied(event, creature, killer)
     creature:RemoveEvents()
 end
 
-RegisterCreatureEvent(NPC_EXAMPLE, 1, NpcExample.OnEnterCombat)
-RegisterCreatureEvent(NPC_EXAMPLE, 2, NpcExample.OnLeaveCombat)
-RegisterCreatureEvent(NPC_EXAMPLE, 3, NpcExample.OnTargetDied)
-RegisterCreatureEvent(NPC_EXAMPLE, 4, NpcExample.OnDied)
+RegisterCreatureEvent(BossEntry, 1, NpcExample.OnEnterCombat)
+RegisterCreatureEvent(BossEntry, 2, NpcExample.OnLeaveCombat)
+RegisterCreatureEvent(BossEntry, 3, NpcExample.OnTargetDied)
+RegisterCreatureEvent(BossEntry, 4, NpcExample.OnDied)
