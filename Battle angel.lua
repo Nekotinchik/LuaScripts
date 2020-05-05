@@ -34,7 +34,7 @@ function NpcExample.OnDied(event, creature, killer)
     creature:RemoveEvents()
 end
 
-RegisterCreatureEvent(BossEntry, 1, NpcExample.OnEnterCombat)
-RegisterCreatureEvent(BossEntry, 2, NpcExample.OnLeaveCombat)
-RegisterCreatureEvent(BossEntry, 3, NpcExample.OnTargetDied)
-RegisterCreatureEvent(BossEntry, 4, NpcExample.OnDied)
+RegisterCreatureEvent(BossEntry, 1, OnEnterCombat)
+RegisterCreatureEvent(BossEntry, 2, OnLeaveCombat)
+RegisterCreatureEvent(BossEntry, 3, OnTargetDied)
+RegisterCreatureEvent(BossEntry, 4, OnDied)

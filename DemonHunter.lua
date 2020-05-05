@@ -8,7 +8,7 @@ local emote= {
 -- ability
 local Shield_Of_Runes = 62277;
 
-};
+
 
 function OnEnterCombat(event, creature, target)    
     creature:SendUnitYell(emote[1], 0)                   
