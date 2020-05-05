@@ -22,15 +22,15 @@ function stun(event, delay, pCall, creature)
 end
 
 
-function NpcExample.OnLeaveCombat(event, creature)
+function OnLeaveCombat(event, creature)
     creature:RemoveEvents()
 end
 
-function NpcExample.OnTargetDied(event, creature, victim)
+function OnTargetDied(event, creature, victim)
 
 end
 
-function NpcExample.OnDied(event, creature, killer)
+function OnDied(event, creature, killer)
     creature:RemoveEvents()
 end
 
