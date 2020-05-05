@@ -1,44 +1,43 @@
-local NPC_EXAMPLE = 100092
+local Boss_Entry = 100092
 
-local NpcExample = {}
-
-local NpcExampleSay= {
+-- emote
+local emote= {
     [1] = "Mortals ... is ... Here ...",
 };
 
-local NpcExampleSpells= {
-    [1] = 62277
+-- ability
+local Shield_Of_Runes = 62277;
 
 };
 
-function NpcExample.OnEnterCombat(event, creature, target)        -- Start Phase 1 at 100% Health
-    creature:SendUnitYell(NpcExampleSay[1], 0)                     -- NPC Say
-    creature:RegisterEvent(NpcExample.OnPhase_1_Fireball_Say, 1000, 1)
+function OnEnterCombat(event, creature, target)    
+    creature:SendUnitYell(emote[1], 0)                   
+    creature:RegisterEvent(Shield_Of_Runes, 1000, 1)
 end
 
-function NpcExample.OnPhase_1_Fireball_Say(event, delay, pCall, creature)
-	creature:CastSpell(creature:GetVictim(), NpcExampleSpells[1]) 
-	creature:RegisterEvent(NpcExample.OnPhase_1_Fireball_Say, 25000, 1)-- Npc Cast Spell
+function Shield_Of_Runes(event, delay, pCall, creature)
+	creature:CastSpell(creature:GetVictim(), Shield_Of_Runes) 
+	creature:RegisterEvent(Shield_Of_Runes, 25000, 1)-- Npc Cast Spell
 end
 
 
 
 
-function NpcExample.OnLeaveCombat(event, creature)
+function OnLeaveCombat(event, creature)
       
 
     creature:RemoveEvents()
 end
 
-function NpcExample.OnTargetDied(event, creature, victim)
+function OnTargetDied(event, creature, victim)
 
 end
 
-function NpcExample.OnDied(event, creature, killer)
+function OnDied(event, creature, killer)
     creature:RemoveEvents()
 end
 
-RegisterCreatureEvent(NPC_EXAMPLE, 1, NpcExample.OnEnterCombat)
-RegisterCreatureEvent(NPC_EXAMPLE, 2, NpcExample.OnLeaveCombat)
-RegisterCreatureEvent(NPC_EXAMPLE, 3, NpcExample.OnTargetDied)
-RegisterCreatureEvent(NPC_EXAMPLE, 4, NpcExample.OnDied)
+RegisterCreatureEvent(Boss_Entry, 1, OnEnterCombat)
+RegisterCreatureEvent(Boss_Entry, 2, OnLeaveCombat)
+RegisterCreatureEvent(Boss_Entry, 3, OnTargetDied)
+RegisterCreatureEvent(Boss_Entry, 4, OnDied)
