@@ -3,6 +3,12 @@
 
 ]]
 
+--deily_rewars
+local hour24_reward_box = 17202
+local hour5_reward_box = 17202
+local PvP_reward_box = 17202
+local Duel_reward_box = 17202
+
 local item30day = 21558
       item15day = 21559
 	  item7day = 21557
@@ -27,7 +33,7 @@ player:GossipMenuAddItem(9, "|cccFF0000[ Duel Zone ]", 0, 201)
 player:GossipMenuAddItem(9, "|cccFF0000[ World Boss ]", 0, 9)
 player:GossipMenuAddItem(3, "|ccc000099[ Player Tools ]", 0, 10)
 player:GossipMenuAddItem(8, "|cccC71585[ VIP - VotePoint Panel ]", 0, 223)
-player:GossipMenuAddItem(6, "[ Gifts - Rewards (Daily) ]", 0, 281)
+player:GossipMenuAddItem(6, "[ Gifts - Rewards (Daily) ]", 0, 281)     -- ВЕРНУТЬ ОБРАТНО И ИЗМЕНИТЬ НАГРАДЫ!!!!!!
 player:GossipMenuAddItem(4, "|ccc00746F[ Reset Instance ]", 0, 11)
 player:GossipSendMenu(1, item)
 end
@@ -274,7 +280,7 @@ player:GossipMenuAddItem(2, "[ Emerald Forest ]", 0, 91)
 player:GossipMenuAddItem(2, "[ The Verdant Fields ]", 0, 92)
 player:GossipMenuAddItem(2, "[ The Deadmines ]", 0, 93)
 player:GossipMenuAddItem(2, "[ Desert Eagle ]", 0, 94)
-player:GossipMenuAddItem(2, "[ Gruul's Lair ]", 0, 95)
+--player:GossipMenuAddItem(2, "[ Gruul's Lair ]", 0, 95)
 player:GossipMenuAddItem(2, "[ Olympic Square ]", 0, 96)
 player:GossipMenuAddItem(2, "[ Sunwell Plateau ]", 0, 97)
 player:GossipMenuAddItem(9, "|cccFF0000[ Kingdom of Tigers ]", 0, 98)
@@ -1314,12 +1320,13 @@ end
 if(intid == 281) then
 player:GossipMenuAddItem(3, "|cccFF0000[ Daily Gift ]", 0, 282)
 player:GossipMenuAddItem(3, "|cccFF0000[ Every 5 Hours play gift ]", 0, 283)
---player:GossipMenuAddItem(3, "|cccFF0000[ Every 65 Duel win gift ]", 0, 284)
---player:GossipMenuAddItem(3, "|cccFF0000[ Every 65 Kills gift ]", 0, 285)
+player:GossipMenuAddItem(3, "|cccFF0000[ Every 65 Duel win gift ]", 0, 284)
+player:GossipMenuAddItem(3, "|cccFF0000[ Every 65 Kills gift ]", 0, 285)
 --player:GossipMenuAddItem(3, "|cccFF0000[ Every friends gift ]", 0, 286)
 player:GossipMenuAddItem(3, "|ccc993366[<- Back]", 0, 29)
 player:GossipSendMenu(1, item, 2)
 end
+
 
 
 --[[
@@ -3571,14 +3578,10 @@ local f = (cooldown - c)
     mins = string.format("%02.f", math.floor(seconds/60 - (hours*60)));
     secs = string.format("%02.f", math.floor(seconds - hours*3600 - mins *60));
     time = hours..":"..mins..":"..secs
+      
  
-
-
-            
- 
-
 if (c >= cooldown) or (time1 == 0) then
-player:AddItem(17)
+player:AddItem(hour24_reward_box)
 player:SendBroadcastMessage("|ccc33FFFF[Teleporter Stone]|ccc33FF33: Geat job, Check your bag :)")
 CharDBQuery("update `characters` set `reward_24_hour`='"..totaltime.."' where `guid`='"..playerguid.."'");
 player:GossipComplete()
@@ -3617,31 +3620,31 @@ num = math.random(0,5)
 
 if (c >= cooldown) and (num == 1) then
 player:SendBroadcastMessage(name.. " rolls 1 (1-5)") 
-player:AddItem(17202, 1)
+player:AddItem(hour5_reward_box, 1)
 player:SendBroadcastMessage("|ccc33FFFF[Teleporter Stone]|ccc33FF33: Geat job, Check your bag :)")
 CharDBQuery("update `characters` set `reward_5_hour`='"..time1.."' + 18000 where `guid`='"..playerguid.."'");
 player:GossipComplete()
 elseif (c >= cooldown) and (num == 2) then
 player:SendBroadcastMessage(name.. " rolls 2 (1-5)") 
-player:AddItem(17202, 2)
+player:AddItem(hour5_reward_box, 2)
 player:SendBroadcastMessage("|ccc33FFFF[Teleporter Stone]|ccc33FF33: Geat job, Check your bag :)")
 CharDBQuery("update `characters` set `reward_5_hour`='"..time1.."' + 18000 where `guid`='"..playerguid.."'");
 player:GossipComplete()
 elseif (c >= cooldown) and (num == 3) then
 player:SendBroadcastMessage(name.. " rolls 3 (1-5)") 
-player:AddItem(17202, 3)
+player:AddItem(hour5_reward_box, 3)
 player:SendBroadcastMessage("|ccc33FFFF[Teleporter Stone]|ccc33FF33: Geat job, Check your bag :)")
 CharDBQuery("update `characters` set `reward_5_hour`='"..time1.."' + 18000 where `guid`='"..playerguid.."'");
 player:GossipComplete()
 elseif (c >= cooldown) and (num == 4) then
 player:SendBroadcastMessage(name.. " rolls 4 (1-5)") 
-player:AddItem(17202, 4)
+player:AddItem(hour5_reward_box, 4)
 player:SendBroadcastMessage("|ccc33FFFF[Teleporter Stone]|ccc33FF33: Geat job, Check your bag :)")
 CharDBQuery("update `characters` set `reward_5_hour`='"..time1.."' + 18000 where `guid`='"..playerguid.."'");
 player:GossipComplete()
 elseif (c >= cooldown) and (num == 5) then
 player:SendBroadcastMessage(name.. " rolls 5 (1-5)") 
-player:AddItem(17202, 5)
+player:AddItem(hour5_reward_box, 5)
 player:SendBroadcastMessage("|ccc33FFFF[Teleporter Stone]|ccc33FF33: Geat job, Check your bag :)")
 CharDBQuery("update `characters` set `reward_5_hour`='"..time1.."' + 18000 where `guid`='"..playerguid.."'");
 player:GossipComplete()
@@ -3649,6 +3652,46 @@ else
 player:SendBroadcastMessage("|ccc33FFFF[Teleporter Stone]|ccc33FF33: You need "..hours.." hours "..mins.." minutes "..secs.." seconds playing. Call me later!")
 player:GossipComplete()
 end
+end
+
+-- [ Every 65 Kills gift ]
+if (intid == 285) then
+playerguid = player:GetGUIDLow()
+local J = CharDBQuery("SELECT pvp_kills FROM characters where `guid`='"..playerguid.."'");
+local pvp = J:GetUInt32(0)
+pvp_kills = pvp - 65
+pvp_kills_need = 65 - pvp
+	if (pvp >= 65) then
+		player:AddItem(PvP_reward_box)
+		CharDBQuery("update `characters` set `pvp_kills`='"..pvp_kills.."' where `guid`='"..playerguid.."'");
+		player:SendBroadcastMessage("|ccc33FFFF[Teleporter Stone]|ccc33FF33: Geat job, Check your bag :)")
+		player:GossipComplete()
+	end
+
+	if (pvp < 65) then
+		player:SendBroadcastMessage("|ccc33FFFF[Teleporter Stone] You do not have 65 PvP kills left: "..pvp_kills_need..".")
+		player:GossipComplete()
+	end
+end
+
+-- [ Every 65 Duel win gift ]
+if (intid == 284) then
+playerguid = player:GetGUIDLow()
+local T = CharDBQuery("SELECT duel_win_reward FROM characters where `guid`='"..playerguid.."'");
+local Duel = T:GetUInt32(0)
+Duel_reward = Duel - 65
+Duel_win_need = 65 - Duel
+	if (Duel >= 65) then
+		player:AddItem(Duel_reward_box)
+		CharDBQuery("update `characters` set `pvp_kills`='"..Duel_reward.."' where `guid`='"..playerguid.."'");
+		player:SendBroadcastMessage("|ccc33FFFF[Teleporter Stone]|ccc33FF33: Geat job, Check your bag :)")
+		player:GossipComplete()
+	end
+
+	if (Duel < 65) then
+		player:SendBroadcastMessage("|ccc33FFFF[Teleporter Stone] You did not win 65 duels left: "..Duel_win_need..".")
+		player:GossipComplete()
+	end
 end
 
 -- Lich King
