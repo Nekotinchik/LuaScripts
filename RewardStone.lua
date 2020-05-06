@@ -4,6 +4,8 @@ player:GossipMenuAddItem(6, "5 hour", 0, 3)
 player:GossipMenuAddItem(6, "24 hour", 0, 800)
 player:GossipMenuAddItem(6, "test", 0, 900)
 player:GossipMenuAddItem(4, "[ VIP SYSTEM ]", 0, 223)
+player:GossipMenuAddItem(4, "PvP kill Reward", 0, 100)
+player:GossipMenuAddItem(4, "Duel_reward", 0, 101)
 player:GossipSendMenu(1, item)
 end
 
@@ -15,8 +17,52 @@ player:GossipMenuAddItem(6, "5 hour", 0, 3)
 player:GossipMenuAddItem(6, "24 hour", 0, 800)
 player:GossipMenuAddItem(6, "test", 0, 900)
 player:GossipMenuAddItem(4, "[ VIP SYSTEM ]", 0, 223)
+player:GossipMenuAddItem(4, "PvP kill Reward", 0, 100)
+player:GossipMenuAddItem(4, "Duel_reward", 0, 101)
 player:GossipSendMenu(1, item, 1)
 end
+
+-- PvP_kills
+if (intid == 100) then
+playerguid = player:GetGUIDLow()
+local J = CharDBQuery("SELECT pvp_kills FROM characters where `guid`='"..playerguid.."'");
+local pvp = J:GetUInt32(0)
+pvp_kills = pvp - 65
+pvp_kills_need = 65 - pvp
+	if (pvp >= 65) then
+		player:AddItem(17)
+		CharDBQuery("update `characters` set `pvp_kills`='"..pvp_kills.."' where `guid`='"..playerguid.."'");
+		player:SendBroadcastMessage("|ccc33FFFF[Teleporter Stone]|ccc33FF33: Geat job, Check your bag :)")
+		player:GossipComplete()
+	end
+
+	if (pvp < 65) then
+		player:SendBroadcastMessage("|ccc33FFFF[Server Uptime] У вас нет 65 PvP килов осталось: "..pvp_kills_need..".")
+		player:GossipComplete()
+	end
+end
+
+-- duel reward
+if (intid == 101) then
+playerguid = player:GetGUIDLow()
+local T = CharDBQuery("SELECT duel_win_reward FROM characters where `guid`='"..playerguid.."'");
+local Duel = T:GetUInt32(0)
+Duel_reward = Duel - 65
+Duel_win_need = 65 - Duel
+	if (Duel >= 65) then
+		player:AddItem(17)
+		CharDBQuery("update `characters` set `pvp_kills`='"..Duel_reward.."' where `guid`='"..playerguid.."'");
+		player:SendBroadcastMessage("|ccc33FFFF[Teleporter Stone]|ccc33FF33: Geat job, Check your bag :)")
+		player:GossipComplete()
+	end
+
+	if (Duel < 65) then
+		player:SendBroadcastMessage("|ccc33FFFF[Server Uptime] Вы не выиграли 65 дуэлей осталось: "..Duel_win_need..".")
+		player:GossipComplete()
+	end
+end
+
+
 
 
 -- TEST 2
@@ -34,6 +80,8 @@ local seconds = c
 
 player:SendBroadcastMessage("|ccc006400[Server Uptime]|ccc00FF00 "..hours.." Hour(s) "..mins.." Minute(s) "..secs.." Second(s).")
 end
+
+
 
 --[[
 --TEST
@@ -992,6 +1040,4 @@ player:AddItem(17)
 
 end
 --]]
-
-
 
